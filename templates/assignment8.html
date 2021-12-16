@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}
+assignment 8
+{% endblock %}
+
+
+{% block content %}
+    {{ super() }}
+    <h2>About me</h2>
+    <h2>Name: {{ profile.name | default('unknown',true) }}{{ profile.last_name}}</h2>
+
+     <h2> from: {{ city | default('unknown',true) }}</h2>
+    <h2>Hobbies:</h2>
+    <ul>
+        {% for hobby in hobbies %}
+            <li>{{ hobby }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Degrees:</h2>
+    <ul>
+        <li>{{ degrees[0] }}</li>
+        <li>{{ degrees[1] }}</li>
+    </ul>
+
+
+    {% if profile.name %}
+        <h3>this person in the DB </h3>
+        {#<h3><a href="/about">Info about me</a> </h3>#}
+    {% else %}
+        <h3>please log in</h3>
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>assignment 8</title>
+</head>
+
+
+<body>
+ {% include 'header.html' %}
+<h2>About me</h2>
+<h2>Name: {{ profile.name | default('unknown',true) | unique }}{{ profile.last_name | unique}}</h2>
+
+ <h2> from: {{ city | default('unknown',true) }}</h2>
+<h2>Hobbies:</h2>
+<ul>
+    {% for hobby in hobbies %}
+        <li>{{ hobby }}</li>
+    {% endfor %}
+</ul>
+<h2>Degrees:</h2>
+<ul>
+    <li>{{ degrees[0] }}</li>
+    <li>{{ degrees[1] }}</li>
+</ul>
+
+
+{% if profile.name %}
+    <h3>this person in the DB </h3>
+    <h3><a href="/about">Info about me</a> </h3>
+{% else %}
+    <h3>please log in</h3>
+{% endif %}
+
+
+</body>
+</html>
+
+#}

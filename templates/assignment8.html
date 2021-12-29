@@ -6,9 +6,13 @@ assignment 8
 
 {% block content %}
     {{ super() }}
-    <h2>About me</h2>
-    <h2>Name: {{ profile.name | default('unknown',true) }}{{ profile.last_name}}</h2>
+    {% if session.nickname1 %}
+        <h3> welcome back, {{ session.nickname1 }}</h3>
+    {% endif %}
 
+    <h2>About me</h2>
+    <h2>Name: {{ profile.user1.name | default('unknown',true) }}{{ profile.user1.last_name}}</h2>
+    <h2>email: {{ profile.user1.email }}</h2>
      <h2> from: {{ city | default('unknown',true) }}</h2>
     <h2>Hobbies:</h2>
     <ul>

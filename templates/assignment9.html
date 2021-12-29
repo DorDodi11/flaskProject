@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}
+assignment 9
+{% endblock %}
+
+
+{% block content %}
+    <h1>user's details</h1>
+    <h2>search form</h2>
+    <form action="/assignment9" method="get">
+        first name:<input first name="first name" type="text"><br>
+        last name:<input last name="last name" type="text"><br>
+        {#nick name:<input nickname="nickname" type="text">#}
+        <input type="submit">
+    </form>
+    {% if fullist %}
+        {% for user in fullist %}
+            <h3>{{ user.name }} {{ user.lastname }}</h3>
+        {% endfor %}
+    {% endif %}
+
+    {% if searchfound %}
+        <h3>{{ searchfound.name }} {{ searchfound.lastname }}</h3>
+    {% endif %}
+
+    {% if itemnotfound %}
+        <h1>{{ itemnotfound }}</h1>
+    {% endif %}
+
+
+    <h2>registration form</h2>
+    <form action="/assignment9" method="post">
+        first name:<input first name="first name" type="text"><br>
+        last name:<input last name="last name" type="text"><br>
+        {#nick name:<input nickname="nickname" type="text">#}
+        <input type="submit">
+    </form>
+
+
+    {% if session.nickname1 %}
+        <h3> welcome back, {{ session.nickname1 }}</h3>
+    {% endif %}
+
+
+    {% if notregistered %}
+        <h1>{{ notregistered }}</h1>
+    {% endif %}
+    {#<h2>registration form</h2>
+    <form action="/" method="post">
+        username:<input name="username" type="text">
+        password:<input password="password" type="password">
+        <input type="submit">
+    </form>#}
+
+{% endblock %}

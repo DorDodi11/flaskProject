@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+assignment 11
+{% endblock %}
+
+
+{% block content %}
+    <h1>Frontend</h1>
+    <h2>Show User <button onclick="getUser()">Get User</button></h2>
+    <main>
+
+    </main>
+    <script src="../static/js/fetch.js" ></script>
+
+    <h1>Backend</h1>
+    <form action="/assignment11/outer_source">
+        enter num between 1 to 6: <input type="number" name="number">
+        <input type="submit" value="Get user">
+    </form>
+    {% if user %}
+            <img src="{{ user.id }}" alt="Profile_Avatar"/>
+            <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            <h3>email: {{ user.email }} </h3>
+            <hr>
+    {% endif %}
+
+{% endblock %}
+

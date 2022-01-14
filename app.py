@@ -1,9 +1,24 @@
+import random
+
 from flask import Flask, redirect, url_for
 from flask import render_template
-from flask import request
+from flask import request, jsonify
 from flask import session
+import requests
+from flask import blueprints
+from interact_with_DB import interact_db
+
+
 app = Flask(__name__)
-app.secret_key='123'
+app.secret_key = '12345'
+#app.config.from_pyfile('settings.py')
+
+####pages
+##homepage
+from pages.assignment10.assignment10 import assignment10
+app.register_blueprint(assignment10)
+
+
 
 @ app.route('/')
 def home_func():  # put application's code here
@@ -59,23 +74,32 @@ def assignment9_func():
     return render_template('assignment9.html')
 
 
+'''@app.route('/assignment11/users', methods=['GET'])
+def returnusersjsonify():
+    if request.method == 'GET':
+        query = "select * from users"
+        query_result = interact_db(query=query, query_type='fetch')
+        data = list(map(lambda row: row._asdict(), query_result))
+        data = jsonify(data)
+    return data'''
 
 
+def get_user(num):
+    res = requests.get(f' https://reqres.in/api/users/{num}')
+    # res = requests.get('https://pokeapi.co/api/v2/pokemon/%s' % random_n)
+    res = res.json()
+    return res
 
 
-@app.route('/about')
-def about_func():  # put application's code here
-    return 'this is about page'
-
-
-@app.route('/contact')
-def contact_func():  # put application's code here
-    return redirect(url_for('catalog_func'))
-
-@app.route('/catalog')
-def catalog_func():  # put application's code here
-    return 'this is catalog page'
-
+@app.route('/assignment11/outer_source', methods=['GET'])
+def outersource():
+    num=3
+    if "number" in request.args:
+        num = int(request.args['number'])
+        print(num)
+        user1 = get_user(num)
+        return render_template('assignment11.html', user=user1)
+    return render_template('assignment11.html')
 
 if __name__ == '__main__':
-    app.run(Debug=True)
+    app.run(Debug=True, port=3307)

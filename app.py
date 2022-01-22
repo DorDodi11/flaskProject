@@ -1,5 +1,4 @@
 import random
-
 from flask import Flask, redirect, url_for
 from flask import render_template
 from flask import request, jsonify
@@ -11,7 +10,7 @@ from interact_with_DB import interact_db
 
 app = Flask(__name__)
 app.secret_key = '12345'
-#app.config.from_pyfile('settings.py')
+
 
 ####pages
 ##homepage
@@ -100,6 +99,28 @@ def outersource():
         user1 = get_user(num)
         return render_template('assignment11.html', user=user1)
     return render_template('assignment11.html')
+
+
+@app.route('/assignment12/restapi_users',defaults = {'USER_ID':1})
+@app.route('/assignment12/restapi_users/<int:USER_ID>')
+def selectuser_func(USER_ID):
+    if USER_ID == 1:
+        query = "SELECT * FROM users WHERE id=1;"
+        query_result = interact_db(query=query, query_type='fetch')
+        response = query_result[0]
+        response = jsonify(response)
+        return response
+    else:
+        query = "SELECT * FROM users WHERE id='%s';" %USER_ID
+        query_result = interact_db(query=query,query_type='fetch')
+        response = {}
+        if len(query_result) != 0:
+            response = query_result[0]
+        else :
+            return "This user doesn't exist "
+        response = jsonify(response)
+    return response
+
 
 if __name__ == '__main__':
     app.run(Debug=True, port=3307)
